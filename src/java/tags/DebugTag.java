@@ -18,18 +18,17 @@ import javax.servlet.jsp.tagext.TagSupport;
 public class DebugTag extends TagSupport {
 
     @Override
-    public int doStartTag() throws JspException{
-        
-        ServletRequest request = (ServletRequest) pageContext.getServletContext();
+    public int doStartTag() throws JspException {
+
+        ServletRequest request = pageContext.getRequest();
         String domain = request.getServerName();
         String debug = request.getParameter("debug");
-        
-        if(debug != null){
-            if(domain.equals("test") || domain.equals("localhost")){
+
+        if (debug != null) {
+            if (domain.equals("localhost") || domain.substring(0, domain.indexOf(".")).equals("test"))
                 return EVAL_BODY_INCLUDE;
-            }
-        }    
+        }
         return SKIP_BODY;
     }
-    
+
 }
